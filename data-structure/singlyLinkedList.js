@@ -144,19 +144,35 @@ class SinglyLinkedList {
 
   // 插入指定位置node
   insert(i, value) {
-    if(i === 0) return !!this.unshift(value);
-    if(i === this.length) return !!this.push(value)
+    // if(i === 0) return !!this.unshift(value);
+    // if(i === this.length) return !!this.push(value)
 
-    let prevNode = this.get(i - 1)
-    if(prevNode) {
-      const newNode = new Node(value)
-      let temp = prevNode.next
-      prevNode.next = newNode;
-      newNode.next = temp;
-      this.length++;
-      return true;
+    // let prevNode = this.get(i - 1)
+    // if(prevNode) {
+    //   const newNode = new Node(value)
+    //   let temp = prevNode.next
+    //   prevNode.next = newNode;
+    //   newNode.next = temp;
+    //   this.length++;
+    //   return true;
+    // }
+    // return false;
+    if(i < 0 || i > this.length - 1) return false;
+    if(i === 0) return !!this.unshift(value);
+    if(!this.head || i === this.length) return this.push(value);
+    
+    const newNode = new Node(value);
+    let idx = 0;
+    let prevNode = this.head;
+    while(idx < i - 1) {
+        prevNode = prevNode.next;
+        idx++;
     }
-    return false;
+    const nextNode = prevNode.next;
+    prevNode.next = newNode;
+    newNode.next = nextNode;
+    this.length++;
+    return true;
   }
 
   // 移除指定位置node
@@ -206,10 +222,35 @@ class SinglyLinkedList {
     }
     return this;
   }
+
+  rotate(i=0) {
+    if(i === 0) return;
+    let _i = i % this.length;
+    if(i < 0) {
+      _i = this.length + i
+    }
+
+    const prevNode = this.get(_i);
+    const originHead = this.head;
+    const originTail = this.tail;
+    if(prevNode) {
+      this.head = prevNode;
+      originTail.next = originHead;
+      let idx = 0;
+      let newTail = originHead;
+      // 尾巴是到i的前一個
+      while(idx < _i - 1) {
+        newTail = newTail.next;
+        idx++;
+      }
+      newTail.next = null;
+      this.tail = newTail;
+    }
+  }
 }
 
 const linkedList = new SinglyLinkedList()
-linkedList.push(10).push(20).push(30)
+linkedList.push(10).push(20).push(30).push(40)
 // console.log(linkedList)
 
 // console.log(
@@ -234,6 +275,9 @@ linkedList.push(10).push(20).push(30)
 // console.log(
 //   'get method sample: ',
 //   linkedList.get(0),
+//   linkedList.get(1),
+//   linkedList.get(2),
+//   linkedList.get(3),
 // )
 
 // console.log(
@@ -241,11 +285,25 @@ linkedList.push(10).push(20).push(30)
 //   linkedList.set(0, 1234)
 // )
 
-// console.log(
-//   'insert method sample: ',
-//   linkedList.insert(2, 22223),
+console.log(
+  'rotate method sample: ',
+  linkedList.rotate(0),
+  linkedList.print(),
+  linkedList.rotate(-1),
+  linkedList.print(),
+  // linkedList.rotate(2),
+  // linkedList.print(),
+  linkedList.rotate(3),
+  linkedList.print(),
+)
+
+console.log(
+  'insert method sample: ',
+  linkedList.print(),
+  linkedList.insert(1, 22223),
+  linkedList.print(),
 //   linkedList.get(2),
-// )
+)
 
 // console.log(
 //   'remove method sample: ',
