@@ -29,5 +29,5 @@ const quickSort = (arr=[], start=0, end=arr.length) => {
 }
 
 console.log(
-  quickSort([1, 2, 10, 5, 4, 8])
+  quickSort([3, 5, 4, 1, 8, 2, 9])
 )

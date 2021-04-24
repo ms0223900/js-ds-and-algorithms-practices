@@ -108,7 +108,7 @@ class SinglyLinkedList {
   }
 
   get(i=0) {
-    if(i < 0 || i > this.length - 1) {
+    if(i < 0 || i > this.length - 1 || !this.head) {
       return null;
     }
     let idx = 0;
@@ -224,8 +224,8 @@ class SinglyLinkedList {
   }
 
   rotate(i=0) {
-    if(i === 0) return;
     let _i = i % this.length;
+    if(_i === 0) return;
     if(i < 0) {
       _i = this.length + i
     }
@@ -249,71 +249,121 @@ class SinglyLinkedList {
   }
 }
 
-const linkedList = new SinglyLinkedList()
-linkedList.push(10).push(20).push(30).push(40)
-// console.log(linkedList)
+function main() {
+  const linkedList = new SinglyLinkedList()
+  linkedList.push(10).push(20).push(30).push(40)
+  // console.log(linkedList)
 
-// console.log(
-//   'pop method sample: ',
-//   linkedList.pop(),
-//   linkedList.pop(),
-//   linkedList.pop(),
-// )
+  // console.log(
+  //   'pop method sample: ',
+  //   linkedList.pop(),
+  //   linkedList.pop(),
+  //   linkedList.pop(),
+  // )
 
-// console.log(
-//   'shift method sample: ',
-//   linkedList.shift(),
-//   linkedList.shift(),
-//   linkedList.shift(),
-// )
+  // console.log(
+  //   'shift method sample: ',
+  //   linkedList.shift(),
+  //   linkedList.shift(),
+  //   linkedList.shift(),
+  // )
 
-// console.log(
-//   'unshift method sample: ',
-//   linkedList.unshift(233).unshift(10),
-// )
+  // console.log(
+  //   'unshift method sample: ',
+  //   linkedList.unshift(233).unshift(10),
+  // )
 
-// console.log(
-//   'get method sample: ',
-//   linkedList.get(0),
-//   linkedList.get(1),
-//   linkedList.get(2),
-//   linkedList.get(3),
-// )
+  // console.log(
+  //   'get method sample: ',
+  //   linkedList.get(0),
+  //   linkedList.get(1),
+  //   linkedList.get(2),
+  //   linkedList.get(3),
+  // )
 
-// console.log(
-//   'set method sample: ',
-//   linkedList.set(0, 1234)
-// )
+  // console.log(
+  //   'set method sample: ',
+  //   linkedList.set(0, 1234)
+  // )
 
-console.log(
-  'rotate method sample: ',
-  linkedList.rotate(0),
-  linkedList.print(),
-  linkedList.rotate(-1),
-  linkedList.print(),
-  // linkedList.rotate(2),
-  // linkedList.print(),
-  linkedList.rotate(3),
-  linkedList.print(),
-)
+  console.log(
+    'rotate method sample: ',
+    linkedList.rotate(0),
+    linkedList.print(),
+    linkedList.rotate(-1),
+    linkedList.print(),
+    // linkedList.rotate(2),
+    // linkedList.print(),
+    linkedList.rotate(3),
+    linkedList.print(),
+  )
 
-console.log(
-  'insert method sample: ',
-  linkedList.print(),
-  linkedList.insert(1, 22223),
-  linkedList.print(),
-//   linkedList.get(2),
-)
+  console.log(
+    'insert method sample: ',
+    linkedList.print(),
+    linkedList.insert(1, 22223),
+    linkedList.print(),
+  //   linkedList.get(2),
+  )
 
-// console.log(
-//   'remove method sample: ',
-//   linkedList.remove(2),
-//   linkedList,
-// )
+  // console.log(
+  //   'remove method sample: ',
+  //   linkedList.remove(2),
+  //   linkedList,
+  // )
 
-console.log(
-  'reverse method sample: ',
-  // linkedList,
-  linkedList.print(),
-  linkedList.reverse().print(),
-)
+  console.log(
+    'reverse method sample: ',
+    // linkedList,
+    linkedList.print(),
+    linkedList.reverse().print(),
+  )
+}
+
+function rotateSample() {
+  const singlyLinkedList = new SinglyLinkedList()
+  singlyLinkedList.push(5).push(10).push(15).push(20).push(25)
+  singlyLinkedList.rotate(3)
+  console.log(
+    singlyLinkedList.head.value,
+    singlyLinkedList.head.next.value,
+    singlyLinkedList.head.next.next.value,
+    singlyLinkedList.head.next.next.next.value,
+    singlyLinkedList.head.next.next.next.next.value,
+    singlyLinkedList.tail.value,
+    singlyLinkedList.tail.next,
+  )
+}
+rotateSample()
+
+function rotateSample2() {
+  const singlyLinkedList = new SinglyLinkedList()
+  singlyLinkedList.push(5).push(10).push(15).push(20).push(25)
+  singlyLinkedList.rotate(-1)
+  console.log(
+    singlyLinkedList.head.value,
+    singlyLinkedList.head.next.value,
+    singlyLinkedList.head.next.next.value,
+    singlyLinkedList.head.next.next.next.value,
+    singlyLinkedList.head.next.next.next.next.value,
+    singlyLinkedList.tail.value,
+    singlyLinkedList.tail.next,
+  )
+}
+rotateSample2()
+
+function rotateSample3() {
+  const singlyLinkedList = new SinglyLinkedList()
+  singlyLinkedList.push(5).push(10).push(15).push(20).push(25)
+  singlyLinkedList.rotate(1000)
+  console.log(
+    singlyLinkedList.head.value,
+    singlyLinkedList.head.next.value,
+    singlyLinkedList.head.next.next.value,
+    singlyLinkedList.head.next.next.next.value,
+    singlyLinkedList.head.next.next.next.next.value,
+    singlyLinkedList.tail.value,
+    singlyLinkedList.tail.next,
+  )
+}
+rotateSample3()
