@@ -124,7 +124,7 @@ class BinarySearchTree {
   remove(val, root=this.root) {
     if(!root) return root;
     
-    // 從左找最大
+    // 先找該node在哪，並且找到其子結構，重新賦予node的關係
     if(val < root.value) {
       root.left = this.remove(val, root.left)
     }
@@ -133,30 +133,22 @@ class BinarySearchTree {
     }
     // 找到該點了
     else {
-      // 沒左邊就找右邊
-      if(!root.left) {
-        const right = root.right;
-        root = null;
-        return right;
-      }
-      // 沒右邊邊就找左邊
-      if(!root.right) {
-        const left = root.left;
-        root = null;
-        return left;
-      }
+      // 如果沒左邊，那直接把右邊的tree搬過來即可
+      if(!root.left) return root.right;
+      // 如果沒右邊，那直接把左邊的tree搬過來即可
+      if(!root.right) return root.left;
       // 如果左右都有
 
-      // 從右找最小(或從左找最大也可以)
+      // 從右找最小
       // const minNode = this.findMin(root.right)
       // root.value = minNode.value;
-      // // 往右繼續遞迴
+      // // 往右繼續遞迴，並且將最小值「拔掉」
       // root.right = this.remove(minNode.value, root.right)
 
-      // 往左找最大
+      // 從左找最大
       const maxNode = this.findMax(root.left)
       root.value = maxNode.value
-      // 往左繼續遞迴
+      // 往左繼續遞迴，並且將最大值「拔掉」
       root.left = this.remove(maxNode.value, root.left)
     }
     return root
@@ -231,26 +223,26 @@ bst.insert(15).insert(20).insert(10).insert(12).insert(1).insert(5).insert(50);
 //   'bfs: ', bst.breadthFirstSearch(),
 // )
 
-// console.log(
-//   'remove node: ', bst.remove(15),
-//   bst.breadthFirstSearch(),
-// )
+console.log(
+  'remove node: ', bst.remove(15),
+  bst.breadthFirstSearch(),
+)
 
 // console.log(
 //   'find second max: ', bst.findSecondLargest()
 // )
 
-(function() {
-  const _bst = new BinarySearchTree()
-  _bst.insert(15).insert(20).insert(10).insert(12)
+// (function() {
+//   const _bst = new BinarySearchTree()
+//   _bst.insert(15).insert(20).insert(10).insert(12)
 
-  console.log('check tree is balanced: ', _bst.isBalanced())
-  _bst.insert(13)
-  console.log('check tree is balanced: ', _bst.isBalanced())
+//   console.log('check tree is balanced: ', _bst.isBalanced())
+//   _bst.insert(13)
+//   console.log('check tree is balanced: ', _bst.isBalanced())
 
-  const _bst2 = new BinarySearchTree()
-  _bst2.insert(5).insert(6).insert(7)
-  console.log(
-    'check tree is balanced: ', _bst2.isBalanced()
-  )
-}())
+//   const _bst2 = new BinarySearchTree()
+//   _bst2.insert(5).insert(6).insert(7)
+//   console.log(
+//     'check tree is balanced: ', _bst2.isBalanced()
+//   )
+// }())
