@@ -3,24 +3,24 @@ const findMemo = (memo={}) => (denos=[], target=0) => memo[genKey(denos, target)
 
 function coinChange(denominations=[], target=0) {
   let memo = {};
-  const memoFn = findMemo(memo)
 
   function coinChangeHelper(_denominations=[], _target=0) {
-    const foundMemo = memoFn(_denominations, _target);
-    // console.log(foundMemo);
+    const foundMemo = findMemo(memo)(_denominations, _target);
+    // console.log(_denominations, _target, foundMemo);
     if(foundMemo) return foundMemo;
     let plansCount = 0;
     if(_denominations.length === 0) return plansCount;
     if(_denominations.length === 1) {
       return 1;
     };
-    const lastDeno = _denominations[_denominations.length - 1]
+    
+    const lastDeno = _denominations[_denominations.length - 1];
+    const remainDenos = _denominations.slice(0, -1);
     let i = 0;
-    let current = lastDeno;
+    let current = lastDeno * i;
     
     while(current <= _target) {
       const remains = _target - current;
-      const remainDenos = _denominations.slice(0, -1);
       plansCount += coinChangeHelper(remainDenos, remains);
       
       i++;
@@ -33,7 +33,7 @@ function coinChange(denominations=[], target=0) {
   coinChangeHelper(denominations, target);
 
   // console.log(memo);
-  return memoFn(denominations, target);
+  return findMemo(memo)(denominations, target);
 }
 
 function coinChangeRecursion(_denominations=[], _target=0) {
@@ -55,6 +55,6 @@ function coinChangeRecursion(_denominations=[], _target=0) {
 
 const denominations = [1, 5, 10, 25];
 console.log(
-  // coinChangeRecursion(denominations, 2000),
-  coinChange(denominations, 14511),
+  // coinChangeRecursion(denominations, 1541),
+  coinChange(denominations, 1541),
 )
