@@ -4,29 +4,32 @@ class Trie {
     this.isWord = false;
   }
   
-  addWord(word='', index=0) {
-    let currentTrie;
+  addWord(word='') {
+    let currentTrie = this;
     for (let i = 0; i < word.length; i++) {
       const char = word[i];
-      // console.log(char);
-      if(!currentTrie) {
-        currentTrie = this;
-      }
       if(!currentTrie.characters[char]) {
-        currentTrie.characters[char] = new Trie()
-      };
-      if(i === word.length - 1) {
-        currentTrie.characters[char].isWord = true;
+        currentTrie.characters[char] = new Trie();
       }
       currentTrie = currentTrie.characters[char];
     }
+    currentTrie.isWord = true
     return this;
   }
 
   // recursion
-  // addWord(word='', index=0) {
-
-  // }
+  addWord(word='', index=0) {
+    if(index === word.length) {
+      this.isWord = true;
+    }
+    if(index < word.length) {
+      const char = word[index];
+      const nextTrie = this.characters[char] || new Trie();
+      nextTrie.addWord(word, index+1);
+      this.characters[char] = nextTrie; // 這個很重要，要把trie連結起來
+    }
+    return this;
+  }
 
   findWord(word='', idx=0, trie=this) {
     // console.log(word, idx, trie);
@@ -213,6 +216,6 @@ secondTrie
 // )
 
 console.log(
-  'auto comletet: ',
+  'auto complete: ',
   secondTrie.autoComplete('ha'),
 )
